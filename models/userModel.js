@@ -15,5 +15,12 @@ module.exports = {
   },
   async delete(id) {
     return knex('users').where('id', id).del();
-  }
+  },
+  async getByEmail(email) {
+    try {
+      return await knex('users').where({ email }).first();
+    } catch (error) {
+      throw error;
+    }
+  },
 };

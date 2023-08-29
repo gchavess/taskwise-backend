@@ -1,10 +1,26 @@
 const UserModel = require('../models/userModel');
+const userService = require('../services/userService');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const secretKey = 'your_secret_key';
 
 module.exports = {
   async createUser(req, res) {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
     try {
-      const user = await UserModel.create({ name, email });
+      const saltRounds = 10;
+      const salt = await bcrypt.genSalt(saltRounds);
+
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const user = await UserModel.create({
+        name,
+        email,
+        password: hashedPassword,
+        salt,
+      });
+
       res.json(user);
     } catch (error) {
       console.error(error);
@@ -66,5 +82,26 @@ module.exports = {
       console.error(error);
       res.status(500).json({ error: 'Error deleting user' });
     }
-  }
+  },
+
+  async login(req, res) {
+    const { email, password } = req.body;
+    try {
+      const user = await userService.authenticateUser(email, password);
+
+      console.log(user);
+      if (user) {
+        // Gerar um token JWT
+        const token = jwt.sign({ userId: user.id }, secretKey, {
+          expiresIn: '1h',
+        });
+        res.status(200).json({ message: 'Login successful', token });
+      } else {
+        res.status(401).json({ error: 'Invalid credentials' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error logging in' });
+    }
+  },
 };
