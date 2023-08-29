@@ -1,0 +1,25 @@
+{
+  "name": "taskwise-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.11",
+    "@babel/preset-env": "^7.22.10",
+    "express": "^4.18.2",
+    "knex": "^2.5.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.0",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
