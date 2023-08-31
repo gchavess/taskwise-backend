@@ -3,8 +3,8 @@ exports.up = async function (knex) {
     table.increments('id').primary();
     table.string('name');
     table.string('email').unique();
-    table.string('password'); // Armazenará o hash da senha
-    table.string('salt'); // Armazenará o salt usado para criar o hash
+    table.string('password');
+    table.string('salt');
   });
 };
 

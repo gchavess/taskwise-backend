@@ -20,6 +20,7 @@ module.exports = {
     try {
       return await knex('users').where({ email }).first();
     } catch (error) {
+      console.error(error);
       throw error;
     }
   },
