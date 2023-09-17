@@ -1,11 +1,14 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 module.exports = {
   development: {
     client: "mysql",
     connection: {
-      host: "aws.connect.psdb.cloud",
-      user: "k3zbuh59hlz6zwhg60sb",
-      password: "pscale_pw_dP99i0F9T5ViRK3UVKQtvXJ5Aj37rpuGoKoCWnc7gXr",
-      database: "taskwise",
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       ssl: {
         rejectUnauthorized: true,
       },
@@ -17,10 +20,10 @@ module.exports = {
   production: {
     client: "mysql",
     connection: {
-      host: "aws.connect.psdb.cloud",
-      user: "k3zbuh59hlz6zwhg60sb",
-      password: "pscale_pw_dP99i0F9T5ViRK3UVKQtvXJ5Aj37rpuGoKoCWnc7gXr",
-      database: "taskwise",
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       ssl: {
         rejectUnauthorized: true,
       },
