@@ -2,7 +2,7 @@
   "name": "taskwise-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +14,7 @@
     "@babel/core": "^7.22.11",
     "@babel/preset-env": "^7.22.10",
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
     "mysql": "^2.18.1",
