@@ -3,8 +3,23 @@ module.exports = {
     client: "mysql",
     connection: {
       host: "aws.connect.psdb.cloud",
-      user: "9lm6v6x0ikna7pdwwnpu",
-      password: "pscale_pw_U4bCNN7tRMZoFIH9ETvZKosbMhWp52PV4tdNLCgecMJ",
+      user: "k3zbuh59hlz6zwhg60sb",
+      password: "pscale_pw_dP99i0F9T5ViRK3UVKQtvXJ5Aj37rpuGoKoCWnc7gXr",
+      database: "taskwise",
+      ssl: {
+        rejectUnauthorized: true,
+      },
+    },
+    migrations: {
+      directory: "../migrations",
+    },
+  },
+  production: {
+    client: "mysql",
+    connection: {
+      host: "aws.connect.psdb.cloud",
+      user: "k3zbuh59hlz6zwhg60sb",
+      password: "pscale_pw_dP99i0F9T5ViRK3UVKQtvXJ5Aj37rpuGoKoCWnc7gXr",
       database: "taskwise",
       ssl: {
         rejectUnauthorized: true,
