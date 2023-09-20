@@ -1,12 +1,27 @@
-const userModel = require('../models/userModel.js');
-const bcrypt = require('bcrypt'); // Make sure to require bcrypt if you haven't already
+// services/userService.js
+const User = require("../models/userModel");
 
-module.exports = {
-  createUser: async (userData) => userModel.create(userData),
-  getAllUsers: async () => userModel.findAll(),
-  getUserById: async (userId) => userModel.findById(userId),
-  updateUser: async (userId, userData) => userModel.update(userId, userData),
-  deleteUser: async (userId) => userModel.remove(userId),
+exports.createUser = async (userData) => {
+  return await User.create(userData);
+};
+
+exports.getAllUsers = async () => {
+  return await User.find();
+};
+
+exports.getUserById = async (userId) => {
+  return await User.findById(userId);
+};
+
+exports.updateUser = async (userId, userData) => {
+  return await User.findByIdAndUpdate(userId, userData, { new: true });
+};
+
+exports.deleteUser = async (userId) => {
+  return await User.findByIdAndDelete(userId);
+};
+
+/*
   async authenticateUser(email, password) {
     try {
       const user = await userModel.getByEmail(email);
@@ -24,4 +39,4 @@ module.exports = {
       throw error;
     }
   },
-};
+  */
