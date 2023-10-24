@@ -46,3 +46,13 @@ exports.getAllTasks = async (req, res) => {
     res.status(500).send("Erro ao buscar tarefas.");
   }
 };
+
+exports.getAllTasksByGoalId = async (goalId, res) => {
+  try {
+    const tasks = await Task.getAll({ where: { goalId } });
+    return tasks;
+  } catch (error) {
+    res.status(500).send("Erro ao buscar tarefas.");
+    throw error;
+  }
+};

@@ -1,5 +1,6 @@
 const Goal = require("../models/goalModel");
 const User = require("../models/userModel");
+const Task = require("./taskController");
 
 exports.createGoal = async (req, res) => {
   try {
@@ -29,18 +30,22 @@ exports.getAllGoals = async (req, res) => {
   try {
     const goals = await Goal.getAll();
 
-    const goalsWithUser = await Promise.all(
+    const goalsWithTasks = await Promise.all(
       goals.map(async (goal) => {
         const user = await User.getById(goal.userId);
         delete goal.userId;
+
+        const tasks = await Task.getAllTasksByGoalId(goal.id); // Add this line
+
         return {
           ...goal,
           user,
+          tasks,
         };
       })
     );
 
-    res.json(goalsWithUser);
+    res.json(goalsWithTasks);
   } catch (error) {
     console.error("Erro ao buscar goals:", error);
     res.status(500).send("Erro ao buscar goals.");
