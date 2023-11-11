@@ -1,5 +1,3 @@
-const admin = require("firebase-admin");
-const db = admin.firestore();
 const Pomodoro = require("../models/pomodoroModel");
 const Task = require("../models/taskModel");
 

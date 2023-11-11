@@ -1,5 +1,3 @@
-const admin = require("firebase-admin");
-const db = admin.firestore();
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");

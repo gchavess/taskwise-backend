@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "build": "npm run lint && npm run transpile",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "transpile": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +23,6 @@
     "mongoose": "^7.5.2"
   },
   "devDependencies": {
-    "eslint": "^8.48.0",
-    "typescript": "^5.2.2"
+    "eslint": "^8.48.0"
   }
 }
