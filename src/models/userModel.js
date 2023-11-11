@@ -39,6 +39,28 @@ class User {
     const userRef = db.collection("users").doc(userId);
     await userRef.delete();
   }
+
+  static async findOne(query) {
+    try {
+      const snapshot = await db
+        .collection("users")
+        .where(...query)
+        .get();
+
+      if (snapshot.empty) {
+        return null;
+      }
+
+      const doc = snapshot.docs[0];
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    } catch (error) {
+      console.error("Erro ao executar a consulta no Firestore:", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = User;

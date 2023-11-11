@@ -6,6 +6,7 @@ const userRoutes = require("./src/routes/userRoutes");
 const goalRoutes = require("./src/routes/goalRoutes");
 const taskRoutes = require("./src/routes/taskRoutes");
 const pomodoroRoutes = require("./src/routes/pomodoroRoutes");
+const loginRoutes = require("./src/routes/loginRoutes");
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,6 +15,7 @@ app.use("/users", userRoutes);
 app.use("/goals", goalRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/pomodoros", pomodoroRoutes);
+app.use("/login", loginRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
