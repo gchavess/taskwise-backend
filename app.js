@@ -17,7 +17,7 @@ app.use("/tasks", taskRoutes);
 app.use("/pomodoros", pomodoroRoutes);
 app.use("/login", loginRoutes);
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor iniciado na porta ${port}`);
 });
