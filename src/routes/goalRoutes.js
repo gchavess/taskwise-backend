@@ -5,5 +5,11 @@ const userController = require("../controllers/userController");
 
 router.post("/", userController.verifyToken, goalController.createGoal);
 router.get("/", userController.verifyToken, goalController.getAllGoals);
+router.delete(
+  "/:goalId",
+  userController.verifyToken,
+  goalController.deleteGoal
+);
+router.put("/:goalId", userController.verifyToken, goalController.updateGoal);
 
 module.exports = router;
