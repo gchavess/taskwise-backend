@@ -1,6 +1,6 @@
-const Goal = require("../models/goalModel");
-const User = require("../models/userModel");
-const Task = require("./taskController");
+const Goal = require('../models/goalModel');
+const User = require('../models/userModel');
+const Task = require('./taskController');
 
 exports.createGoal = async (req, res) => {
   try {
@@ -21,14 +21,16 @@ exports.createGoal = async (req, res) => {
     const goal = await docRef.get();
     res.status(201).json(goal.data());
   } catch (error) {
-    console.error("Erro ao criar meta:", error);
-    res.status(500).send("Erro ao criar meta.");
+    console.error('Erro ao criar meta:', error);
+    res.status(500).send('Erro ao criar meta.');
   }
 };
 
 exports.getAllGoals = async (req, res) => {
   try {
-    const goals = await Goal.getAll();
+    const userId = req.params.userId;
+
+    const goals = await Goal.getByUserId(userId);
 
     const goalsWithTasks = await Promise.all(
       goals.map(async (goal) => {
@@ -37,18 +39,26 @@ exports.getAllGoals = async (req, res) => {
 
         const tasks = await Task.getAllTasksByGoalId(goal.id);
 
+        // Contar o total de tasks e o número de tasks concluídas para cada goal
+        const totalTasks = tasks.length;
+        const tasksConcluidoTrue = tasks.filter(
+          (task) => task.concluido
+        ).length;
+
         return {
           ...goal,
           user,
           tasks,
+          totalTasks,
+          tasksConcluidoTrue,
         };
       })
     );
 
     res.json(goalsWithTasks);
   } catch (error) {
-    console.error("Erro ao buscar goals:", error);
-    res.status(500).send("Erro ao buscar goals.");
+    console.error('Erro ao buscar goals:', error);
+    res.status(500).send('Erro ao buscar goals.');
   }
 };
 
@@ -62,10 +72,10 @@ exports.deleteGoal = async (req, res) => {
 
     await Goal.delete(goalId);
 
-    res.status(200).send("Meta deletada com sucesso.");
+    res.status(200).send('Meta deletada com sucesso.');
   } catch (error) {
-    console.error("Erro ao deletar meta:", error);
-    res.status(500).send("Erro ao deletar meta.");
+    console.error('Erro ao deletar meta:', error);
+    res.status(500).send('Erro ao deletar meta.');
   }
 };
 
@@ -79,17 +89,17 @@ exports.updateGoal = async (req, res) => {
     }
 
     if (!updatedGoalData) {
-      return res.status(400).send("Dados de atualização não fornecidos.");
+      return res.status(400).send('Dados de atualização não fornecidos.');
     }
 
     const updatedGoal = await Goal.update(goalId, updatedGoalData);
 
     res.status(200).json({
-      message: "Meta atualizada com sucesso.",
+      message: 'Meta atualizada com sucesso.',
       updatedGoal: updatedGoal,
     });
   } catch (error) {
-    console.error("Erro ao atualizar meta:", error);
-    res.status(500).send("Erro ao atualizar meta.");
+    console.error('Erro ao atualizar meta:', error);
+    res.status(500).send('Erro ao atualizar meta.');
   }
 };
