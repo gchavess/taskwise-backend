@@ -3,7 +3,7 @@ const router = express.Router();
 const goalController = require("../controllers/goalController");
 const userController = require("../controllers/userController");
 
-router.post("/", userController.verifyToken, goalController.createGoal);
+router.post("/", goalController.createGoal);
 router.get("/:userId", goalController.getAllGoals);
 router.delete(
   "/:goalId",
