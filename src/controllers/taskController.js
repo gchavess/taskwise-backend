@@ -78,9 +78,11 @@ exports.updateTask = async (req, res) => {
       return res.status(400).send("Dados de atualização não fornecidos.");
     }
 
-    // const updatedTask = await Task.update(taskId, updatedTaskData);
+    const updatedTask = await Task.update(taskId, updatedTaskData);
 
-    res.status(200).json({ message: "Tarefa atualizada com sucesso." });
+    res
+      .status(200)
+      .json({ message: "Tarefa atualizada com sucesso.", task: updatedTask });
   } catch (error) {
     console.error("Erro ao atualizar tarefa:", error);
     res.status(500).send("Erro ao atualizar tarefa.");
