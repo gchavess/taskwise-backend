@@ -87,7 +87,7 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-exports.getAllTasksByGoalId = async (arg1, res, req) => {
+exports.getAllTasksByGoalId = async (arg1, res) => {
   try {
     let goalId;
 
