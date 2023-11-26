@@ -87,9 +87,21 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-exports.getAllTasksByGoalId = async (goalId, res) => {
+exports.getAllTasksByGoalId = async (arg1, res, req) => {
   try {
+    let goalId;
+
+    if (arg1.params !== undefined) {
+      goalId = arg1.params.goalId;
+    } else {
+      goalId = arg1;
+    }
+
     const tasks = await Task.getAll({ where: { goalId } });
+
+    if (arg1.params !== undefined) {
+      res.status(200).json(tasks);
+    }
 
     return tasks;
   } catch (error) {

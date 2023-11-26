@@ -5,11 +5,8 @@ const userController = require("../controllers/userController");
 
 router.post("/", taskController.createTask);
 router.get("/", taskController.getAllTasks);
-router.delete(
-  "/:taskId",
-  userController.verifyToken,
-  taskController.deleteTask
-);
-router.put("/:taskId", userController.verifyToken, taskController.updateTask);
+router.delete("/:taskId", taskController.deleteTask);
+router.put("/:taskId", taskController.updateTask);
+router.get("/:goalId", taskController.getAllTasksByGoalId);
 
 module.exports = router;
