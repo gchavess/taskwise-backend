@@ -1,5 +1,5 @@
-const Task = require("../models/taskModel");
-const Goal = require("../models/goalModel");
+const Task = require('../models/taskModel');
+const Goal = require('../models/goalModel');
 
 exports.createTask = async (req, res) => {
   try {
@@ -20,8 +20,8 @@ exports.createTask = async (req, res) => {
     const task = await docRef.get();
     res.status(201).json(task.data());
   } catch (error) {
-    console.error("Erro ao criar tarefa:", error);
-    res.status(500).send("Erro ao criar tarefa.");
+    console.error('Erro ao criar tarefa:', error);
+    res.status(500).send('Erro ao criar tarefa.');
   }
 };
 
@@ -43,8 +43,8 @@ exports.getAllTasks = async (req, res) => {
 
     res.json(tasksWithGoal);
   } catch (error) {
-    console.error("Erro ao buscar tarefas:", error);
-    res.status(500).send("Erro ao buscar tarefas.");
+    console.error('Erro ao buscar tarefas:', error);
+    res.status(500).send('Erro ao buscar tarefas.');
   }
 };
 
@@ -58,10 +58,10 @@ exports.deleteTask = async (req, res) => {
 
     await Task.delete(taskId);
 
-    res.status(200).send("Tarefa deletada com sucesso.");
+    res.status(200).send('Tarefa deletada com sucesso.');
   } catch (error) {
-    console.error("Erro ao deletar tarefa:", error);
-    res.status(500).send("Erro ao deletar tarefa.");
+    console.error('Erro ao deletar tarefa:', error);
+    res.status(500).send('Erro ao deletar tarefa.');
   }
 };
 
@@ -75,17 +75,17 @@ exports.updateTask = async (req, res) => {
     }
 
     if (!updatedTaskData) {
-      return res.status(400).send("Dados de atualização não fornecidos.");
+      return res.status(400).send('Dados de atualização não fornecidos.');
     }
 
     const updatedTask = await Task.update(taskId, updatedTaskData);
 
     res
       .status(200)
-      .json({ message: "Tarefa atualizada com sucesso.", task: updatedTask });
+      .json({ message: 'Tarefa atualizada com sucesso.', task: updatedTask });
   } catch (error) {
-    console.error("Erro ao atualizar tarefa:", error);
-    res.status(500).send("Erro ao atualizar tarefa.");
+    console.error('Erro ao atualizar tarefa:', error);
+    res.status(500).send('Erro ao atualizar tarefa.');
   }
 };
 
@@ -107,8 +107,8 @@ exports.getAllTasksByGoalId = async (arg1, res) => {
 
     return tasks;
   } catch (error) {
-    console.error("Erro ao buscar tarefas:", error);
-    res.status(500).send("Erro ao buscar tarefas.");
+    console.error('Erro ao buscar tarefas:', error);
+    res.status(500).send('Erro ao buscar tarefas.');
     throw error;
   }
 };
@@ -123,7 +123,7 @@ exports.getTasksForTodayByUserId = async (req, res) => {
 
     const today = new Date().toLocaleDateString('pt-BR');
 
-    const tasks = await Task.getAll({ where: { userId } });
+    const tasks = await Task.getAllToday({ where: { userId } });
 
     const tasksForToday = tasks.filter((task) => {
       const taskDate = new Date(task.hora_fim);

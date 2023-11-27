@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const taskController = require('../controllers/taskController');
 
-router.get('/:userId', taskController.getTasksnodForTodayByUserId);
+router.get('/:userId', taskController.getTasksForTodayByUserId);
 router.post('/', taskController.createTask);
 router.get('/', taskController.getAllTasks);
 router.delete('/:taskId', taskController.deleteTask);
