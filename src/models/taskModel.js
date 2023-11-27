@@ -6,13 +6,18 @@ class Task {
     return await db.collection("tasks").add(data);
   }
 
-  static async getAll() {
+  static async getAll({ where = {} }) {
     const tasks = [];
-    const snapshot = await db.collection("tasks").get();
+    const snapshot = await db
+      .collection("tasks")
+      .where("goalId", "==", where.goalId)
+      .get();
     snapshot.forEach((doc) => {
+      const taskData = doc.data();
+
       tasks.push({
         id: doc.id,
-        ...doc.data(),
+        ...taskData,
       });
     });
     return tasks;
