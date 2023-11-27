@@ -96,3 +96,40 @@ exports.getAllTasksByGoalId = async (goalId, res) => {
     throw error;
   }
 };
+
+exports.getTasksForTodayByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).send("O parâmetro 'userId' é obrigatório.");
+    }
+
+    const today = new Date().toLocaleDateString('pt-BR');
+
+    const tasks = await Task.getAll({ where: { userId } });
+
+    const tasksForToday = tasks.filter((task) => {
+      const taskDate = new Date(task.hora_fim);
+      const taskDateString = taskDate.toLocaleDateString('pt-BR');
+      return taskDateString === today;
+    });
+
+    const tasksWithGoal = await Promise.all(
+      tasksForToday.map(async (task) => {
+        const goal = await Goal.getById(task.goalId);
+        delete task.goalId;
+
+        return {
+          ...task,
+          goal,
+        };
+      })
+    );
+
+    res.json(tasksWithGoal);
+  } catch (error) {
+    console.error('Erro ao buscar tarefas:', error);
+    res.status(500).send('Erro ao buscar tarefas.');
+  }
+};

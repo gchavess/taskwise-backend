@@ -1,15 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const taskController = require("../controllers/taskController");
-const userController = require("../controllers/userController");
+const taskController = require('../controllers/taskController');
+const userController = require('../controllers/userController');
 
-router.post("/", taskController.createTask);
-router.get("/", taskController.getAllTasks);
+router.post('/', taskController.createTask);
+router.get('/', taskController.getAllTasks);
+router.get('/:userId', taskController.getTasksForTodayByUserId);
 router.delete(
-  "/:taskId",
+  '/:taskId',
   userController.verifyToken,
   taskController.deleteTask
 );
-router.put("/:taskId", userController.verifyToken, taskController.updateTask);
+router.put('/:taskId', userController.verifyToken, taskController.updateTask);
 
 module.exports = router;
