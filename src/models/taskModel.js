@@ -68,6 +68,26 @@ class Task {
 
     return tasks;
   }
+
+  static async deleteAll(condition) {
+    try {
+      const snapshot = await db
+        .collection("tasks")
+        .where("goalId", "==", condition.where.goalId)
+        .get();
+
+      const deletionPromises = [];
+      snapshot.forEach((doc) => {
+        const taskRef = db.collection("tasks").doc(doc.id);
+        deletionPromises.push(taskRef.delete());
+      });
+
+      await Promise.all(deletionPromises);
+    } catch (error) {
+      console.error("Erro ao deletar tarefas por condição:", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = Task;
