@@ -69,6 +69,29 @@ class Task {
     return tasks;
   }
 
+  static async getAllData(userId, data) {
+    const tasks = [];
+
+    const snapshot = await db
+      .collection("tasks")
+      .where("userId", "==", userId)
+      .get();
+
+    snapshot.forEach((doc) => {
+      const taskData = doc.data();
+      const taskDate = taskData.hora_fim;
+
+      if (taskDate === data) {
+        tasks.push({
+          id: doc.id,
+          ...taskData,
+        });
+      }
+    });
+
+    return tasks;
+  }
+
   static async deleteAll(condition) {
     try {
       const snapshot = await db

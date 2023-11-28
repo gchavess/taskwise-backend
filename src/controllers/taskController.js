@@ -130,6 +130,27 @@ exports.getAllTasksByUserIdAndToday = async (req, res) => {
   }
 };
 
+exports.getAllTasksByUserIdAndDate = async (req, res) => {
+  try {
+    const { userId, data } = req.body;
+
+    if (!userId) {
+      return res.status(400).send("O parâmetro 'userId' é obrigatório.");
+    }
+
+    if (!data) {
+      return res.status(400).send("O parâmetro 'data' é obrigatório.");
+    }
+
+    const tasks = await Task.getAllData(userId, data);
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.error("Erro ao buscar tarefas:", error);
+    res.status(500).send("Erro ao buscar tarefas.");
+  }
+};
+
 exports.deleteAllTasksByGoalId = async (goalId) => {
   try {
     await Task.deleteAll({ where: { goalId } });
