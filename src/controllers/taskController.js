@@ -129,3 +129,12 @@ exports.getAllTasksByUserIdAndToday = async (req, res) => {
     res.status(500).send("Erro ao buscar tarefas.");
   }
 };
+
+exports.deleteAllTasksByGoalId = async (goalId) => {
+  try {
+    await Task.deleteAll({ where: { goalId } });
+  } catch (error) {
+    console.error("Erro ao deletar tarefas por goalId:", error);
+    throw error;
+  }
+};

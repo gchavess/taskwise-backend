@@ -82,6 +82,8 @@ exports.deleteGoal = async (req, res) => {
       return res.status(400).send("O parâmetro 'Id' é obrigatório.");
     }
 
+    await Task.deleteAllTasksByGoalId(goalId);
+
     await Goal.delete(goalId);
 
     res.status(200).send("Meta deletada com sucesso.");
